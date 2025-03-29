@@ -22,6 +22,9 @@ estados = {
     "s16": [("s39", 0.6), ("s40", 0.4)], 
 }
 
+# Título da página
+st.set_page_config(page_title="🚀 Exploração Markov", layout="centered")
+
 # Inicializando variáveis no estado da sessão
 if "historico" not in st.session_state:
     st.session_state.historico = [("s0", None, None)]  # [(estado, próximo estado sorteado, número sorteado)]
@@ -51,15 +54,15 @@ def avancar_estado(index):
 # Exibir cada estado do histórico em um bloco separado
 for i, (estado, estado_anterior, sorteio) in enumerate(st.session_state.historico):
     with st.container():
+        if sorteio is not None:
+            st.write(f"🎲 **Porcentagem sorteada:** `{sorteio:.5f}`")
+
         st.subheader(f"🛰️ Estado {i}: `{estado}`")
-        
+
         if estado in estados:
             transicoes = estados[estado]
             possibilidades = ", ".join([f"{dest} ({prob:.2f})" for dest, prob in transicoes])
             st.write(f"**🔢 Possibilidades de transição:** {possibilidades}")
-
-        if sorteio is not None:
-            st.write(f"🎲 **Número sorteado:** `{sorteio:.5f}`")
 
         # Apenas o último estado recebe o botão para avançar
         if i == len(st.session_state.historico) - 1:
