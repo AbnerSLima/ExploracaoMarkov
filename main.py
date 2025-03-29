@@ -99,6 +99,11 @@ def avancar_estado(index):
         st.session_state.historico.append((proximo_estado, estado_atual, sorteio))
         st.rerun()
 
+# Resetar o histórico
+def resetar_simulacao():
+    st.session_state.historico = [("s0", None, None)]
+    st.rerun()
+
 # Exibir cada estado do histórico em um bloco separado
 for i, (estado, estado_anterior, sorteio) in enumerate(st.session_state.historico):
     with st.container():
@@ -124,3 +129,7 @@ for i, (estado, estado_anterior, sorteio) in enumerate(st.session_state.historic
                 avancar_estado(i)
     
     st.markdown("---")  # Linha divisória entre os estados
+
+# Botão de reset
+if st.button("🔄 Resetar Simulação"):
+    resetar_simulacao()
