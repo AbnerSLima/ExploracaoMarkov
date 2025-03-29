@@ -22,6 +22,24 @@ estados = {
     "s16": [("s39", 0.6), ("s40", 0.4)], 
 }
 
+# Dicionário com as situações de cada estado
+situacoes = {
+    "s0": ("🚀 Preparação para o lançamento", "Os sistemas estão sendo checados e a contagem regressiva começou!"),
+    
+        "s1": ("🔥 Decolagem", "O foguete se desprende da base de lançamento e começa a subir."),
+            "s5": ("🌍 Deixando a Terra para trás", "O planeta azul já começa a ficar pequeno na visão da tripulação."),
+            "s6": ("🌫️ Atravessando a atmosfera", "A nave enfrenta resistência do ar enquanto ganha altitude."),
+                "s19": ("🔭 Primeiro vislumbre do espaço", "A vastidão do universo se abre diante dos olhos da tripulação."),
+            "s7": ("⚡ Turbulência inesperada", "Algumas oscilações foram detectadas, mas a missão segue."),
+        "s2": ("🌪️ Condições meteorológicas adversas", "O foguete decola mas precisa ajustar sua trajetória devido a condições climáticas."),
+            "s8": ("🛰️ Ajustando trajetória", "O foguete realiza uma manobra para entrar na órbita correta."),
+            "s9": ("💨 Ventos solares detectados", "As condições espaciais estão sendo analisadas para ajustes."),
+            "s10": ("🛑 Pequena correção de curso", "Os propulsores são ativados para alinhar a nave."),
+        "s3": ("🔧 Pequeno problema técnico", "A equipe monitora um possível ajuste necessário."),
+        "s4": ("⚠️ Grande problema técnico", "Um grande problema técnico foi detectado! O foguete encontra falhas críticas e a missão corre risco."),
+    
+}
+
 # Título da página
 st.set_page_config(page_title="🚀 Exploração Markov", layout="centered")
 
@@ -57,7 +75,13 @@ for i, (estado, estado_anterior, sorteio) in enumerate(st.session_state.historic
         if sorteio is not None:
             st.write(f"🎲 **Porcentagem sorteada:** `{sorteio:.5f}`")
 
-        st.subheader(f"🛰️ Estado {i}: `{estado}`")
+        st.subheader(f"🔸 Estado {i}: `{estado}`")
+        
+        # Exibir título e descrição da situação
+        if estado in situacoes:
+            titulo, descricao = situacoes[estado]
+            st.markdown(f"### {titulo}")
+            st.write(descricao)
 
         if estado in estados:
             transicoes = estados[estado]
